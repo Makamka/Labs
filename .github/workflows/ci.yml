@@ -26,8 +26,17 @@ jobs:
         cd e2e-screenshot-tests
         npm install
 
+    - name: Install Playwright browsers
+      run: |
+        cd e2e-screenshot-tests
+        npx playwright install
+
+    - name: Fix Playwright permissions
+      run: |
+        cd e2e-screenshot-tests
+        chmod -R +x ./node_modules/.bin/playwright # Додаємо дозволи на виконання для playwright
+
     - name: Run e2e tests
       run: |
         cd e2e-screenshot-tests
-        npx playwright install # Це встановить необхідні браузери для Playwright
         npm test
