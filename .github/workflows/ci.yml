@@ -24,19 +24,19 @@ jobs:
     - name: Install dependencies
       run: |
         cd e2e-screenshot-tests
-        npm install
-
-    - name: Install Playwright browsers
-      run: |
-        cd e2e-screenshot-tests
-        npx playwright install --with-deps  # Встановлення браузерів та залежностей для Playwright
+        npm install  # Встановлення всіх залежностей, включаючи Playwright
 
     - name: Verify Node.js dependencies
       run: |
         cd e2e-screenshot-tests
         ls -l ./node_modules/.bin  # Перевіряємо наявність файлів у каталозі .bin
 
-    - name: Run e2e tests using npx
+    - name: Install Playwright browsers
+      run: |
+        cd e2e-screenshot-tests
+        npm run playwright-install  # Виконати додаткову установку браузерів для Playwright
+
+    - name: Run e2e tests
       run: |
         cd e2e-screenshot-tests
         npx playwright test  # Використовуємо npx для запуску тестів
