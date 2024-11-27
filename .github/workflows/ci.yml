@@ -34,9 +34,9 @@ jobs:
     - name: Install Playwright browsers
       run: |
         cd e2e-screenshot-tests
-        npm run playwright-install  # Виконати додаткову установку браузерів для Playwright
+        npx playwright install  # Виконуємо встановлення браузерів Playwright
 
     - name: Run e2e tests
       run: |
         cd e2e-screenshot-tests
-        npx playwright test  # Використовуємо npx для запуску тестів
+        npx playwright test  # Запускаємо Playwright тести
