@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: '20.x'
 
-      # Крок 3: Кешування залежностей для швидшої роботи
+      # Крок 3: Кешування залежностей
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
@@ -32,24 +32,29 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # Крок 4: Встановлення залежностей і Playwright
-      - name: Install dependencies and Playwright
-        working-directory: ./e2e-screenshot-tests # Вказуємо каталог, де знаходиться package.json
-        run: |
-          npm install
-          npx playwright install --with-deps
+      # Крок 4: Інсталяція залежностей
+      - name: Install dependencies
+        working-directory: ./e2e-screenshot-tests
+        run: npm install
 
       # Крок 5: Забезпечення дозволів для Playwright
       - name: Ensure permissions for Playwright
         working-directory: ./e2e-screenshot-tests
-        run: chmod +x node_modules/.bin/playwright
+        run: |
+          chmod +x node_modules/.bin/playwright
+          chmod -R 755 node_modules
 
-      # Крок 6: Запуск тестів
+      # Крок 6: Встановлення Playwright з усіма залежностями
+      - name: Install Playwright dependencies
+        working-directory: ./e2e-screenshot-tests
+        run: npx playwright install --with-deps
+
+      # Крок 7: Запуск тестів
       - name: Run tests
         working-directory: ./e2e-screenshot-tests/tests
         run: npm test
 
-      # Крок 7: Збереження результатів тестів як артефактів
+      # Крок 8: Завантаження результатів тестів
       - name: Upload test results
         uses: actions/upload-artifact@v3
         with:
