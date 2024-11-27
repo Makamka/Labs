@@ -22,18 +22,19 @@ jobs:
         node-version: '20.x'
 
     - name: Install dependencies and Playwright
-      working-directory: ./e2e-screenshot-tests/package.json  # Вкажіть шлях до каталогу з package.json
+      working-directory: ./e2e-screenshot-tests  # Вказуємо правильний каталог з package.json
       run: |
         npm install
         npx playwright install --with-deps  # Встановлення Playwright з усіма системними залежностями
 
     - name: Ensure permissions for Playwright
-      working-directory: ./e2e-screenshot-tests/package.json 
+      working-directory: ./e2e-screenshot-tests  # Тут також вказуємо правильний каталог
       run: chmod +x node_modules/.bin/playwright
 
     - name: Run tests
-      working-directory: ./e2e-screenshot-tests/tests
+      working-directory: ./e2e-screenshot-tests/tests  # Шлях до тестових файлів
       run: npm test
+
 
 
 
