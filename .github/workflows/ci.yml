@@ -25,4 +25,4 @@ jobs:
       run: cd e2e-screenshot-tests && npm install
 
     - name: Run tests
-      run: npm test
+      run: cd e2e-screenshot-tests && npm test
