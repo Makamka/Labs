@@ -3,13 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "playwright test", 
+    "start": "http-server -p 3000",
+    "playwright-install": "npx playwright install"  // Додаємо команду для установки браузерів Playwright
   },
-  "scripts": {
-  "test": "playwright test",
-  "start": "http-server -p 3000"
-  },
-
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -19,3 +16,4 @@
     "http-server": "^14.1.1"
   }
 }
+
