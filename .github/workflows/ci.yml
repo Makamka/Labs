@@ -26,11 +26,8 @@ jobs:
         cd e2e-screenshot-tests
         npm install
 
-    - name: Set permissions for Playwright
-      run: chmod +x ./node_modules/.bin/playwright
-
     - name: Run e2e tests
       run: |
         cd e2e-screenshot-tests
+        npx playwright install # Це встановить необхідні браузери для Playwright
         npm test
-
