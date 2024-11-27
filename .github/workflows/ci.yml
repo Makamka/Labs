@@ -21,9 +21,10 @@ jobs:
       with:
         node-version: '20.x'
 
-    - name: Install dependencies
-      run: npm install
+    - name: Navigate to project directory
+      working-directory: ./e2e-screenshot-tests/  # Вкажіть тут відносний шлях до каталогу з package.json
+      run: |
+        npm install
+        npm test
 
-    - name: Run tests
-      run: npm test
 
