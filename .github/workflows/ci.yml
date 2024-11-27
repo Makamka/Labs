@@ -21,10 +21,18 @@ jobs:
       with:
         node-version: '20.x'
 
-    - name: Navigate to project directory
-      working-directory: ./e2e-screenshot-tests/  # Вкажіть тут відносний шлях до каталогу з package.json
-      run: |
+    - name: Navigate to project directory and install dependencies
+      working-directory: ./e2e-screenshot-tests 
         npm install
-        npm test
+        npx playwright install  # Встановлення Playwright
+
+    - name: Fix permissions for Playwright
+      working-directory: ./e2e-screenshot-tests
+      run: chmod +x node_modules/.bin/playwright
+
+    - name: Run tests
+      working-directory: ./e2e-screenshot-tests
+      run: npm test
+
 
 
