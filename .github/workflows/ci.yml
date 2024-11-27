@@ -22,7 +22,7 @@ jobs:
         node-version: '20.x'
 
     - name: Install dependencies
-      run: cd e2 && npm install
+      run: cd e2e-screenshot-tests && npm install
 
     - name: Run tests
       run: npm test
