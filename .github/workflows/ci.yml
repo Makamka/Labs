@@ -13,29 +13,48 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      # Крок 1: Клонування репозиторію
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
+      # Крок 2: Встановлення Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
 
-    - name: Install dependencies and Playwright
-      working-directory: ./e2e-screenshot-tests  # Вказуємо правильний каталог з package.json
-      run: |
-        npm install
-        npx playwright install --with-deps  # Встановлення Playwright з усіма системними залежностями
+      # Крок 3: Кешування залежностей для швидшої роботи
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-    - name: Ensure permissions for Playwright
-      working-directory: ./e2e-screenshot-tests  # Тут також вказуємо правильний каталог
-      run: chmod +x node_modules/.bin/playwright
+      # Крок 4: Встановлення залежностей і Playwright
+      - name: Install dependencies and Playwright
+        working-directory: ./e2e-screenshot-tests # Вказуємо каталог, де знаходиться package.json
+        run: |
+          npm install
+          npx playwright install --with-deps
 
-    - name: Run tests
-      working-directory: ./e2e-screenshot-tests/tests  # Шлях до тестових файлів
-      run: npm test
+      # Крок 5: Забезпечення дозволів для Playwright
+      - name: Ensure permissions for Playwright
+        working-directory: ./e2e-screenshot-tests
+        run: chmod +x node_modules/.bin/playwright
 
+      # Крок 6: Запуск тестів
+      - name: Run tests
+        working-directory: ./e2e-screenshot-tests/tests
+        run: npm test
 
+      # Крок 7: Збереження результатів тестів як артефактів
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: ./test-results/
 
 
 
